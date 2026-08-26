@@ -72,15 +72,18 @@ export default defineEventHandler(async (event) => {
     }
 
     if (scene === 'note') {
-      // 重播申请公开留言待审
+      // 重播申请公开留言待审（联表带歌曲归属，供审核上下文）
       const replayRows = await db
         .select({
           id: songReplayRequests.id,
           songId: songReplayRequests.songId,
           submissionNote: songReplayRequests.submissionNote,
+          songTitle: songs.title,
+          songArtist: songs.artist,
           createdAt: songReplayRequests.createdAt
         })
         .from(songReplayRequests)
+        .innerJoin(songs, eq(songReplayRequests.songId, songs.id))
         .where(eq(songReplayRequests.submissionNotePublicStatus, SUBMISSION_NOTE_STATUS.PENDING))
         .orderBy(asc(songReplayRequests.id))
         .limit(limit)
@@ -91,6 +94,8 @@ export default defineEventHandler(async (event) => {
           scene: 'replay_note',
           payload: {
             songId: r.songId,
+            title: r.songTitle,
+            artist: r.songArtist,
             text: r.submissionNote
           },
           createdAt: r.createdAt ? r.createdAt.toISOString() : ''

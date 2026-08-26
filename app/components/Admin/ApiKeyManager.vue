@@ -785,6 +785,16 @@ const availablePermissions = computed(() => [
     value: 'backup:execute',
     label: getPermissionOptionText('backupExecute', 'label'),
     description: getPermissionOptionText('backupExecute', 'description')
+  },
+  {
+    value: 'ai-review:read',
+    label: getPermissionOptionText('aiReviewRead', 'label'),
+    description: getPermissionOptionText('aiReviewRead', 'description')
+  },
+  {
+    value: 'ai-review:write',
+    label: getPermissionOptionText('aiReviewWrite', 'label'),
+    description: getPermissionOptionText('aiReviewWrite', 'description')
   }
 ])
 

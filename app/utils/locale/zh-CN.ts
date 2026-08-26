@@ -4104,7 +4104,9 @@ export const admin = {
       cardCodesRead: { label: '点歌券查询', description: '查看点歌券列表和统计' },
       cardCodesWrite: { label: '点歌券管理', description: '创建和更新点歌券' },
       cardCodesDelete: { label: '点歌券删除', description: '删除点歌券' },
-      backupExecute: { label: '自动备份', description: '触发自动备份任务' }
+      backupExecute: { label: '自动备份', description: '触发自动备份任务' },
+      aiReviewRead: { label: 'AI 审核读取', description: '拉取 AI 审核待审列表' },
+      aiReviewWrite: { label: 'AI 审核写回', description: '写回 AI 审核结果' }
     },
     loadFailed: '加载API密钥失败',
     nameRequired: '请输入密钥名称',

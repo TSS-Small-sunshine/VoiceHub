@@ -1210,7 +1210,7 @@ VoiceHub/
 │   │   │   ├── read-all.post.ts     # 标记所有已读
 │   │   │   ├── settings.post.ts     # 更新通知设置
 │   │   │   └── settings.ts          # 获取通知设置
-│   │   ├── open/           # 开放API（无需认证）
+│   │   ├── open/           # 开放API（API Key 鉴权）
 │   │   │   ├── ai-review/          # AI 审核开放API（外置网关对接，API Key 鉴权）
 │   │   │   │   ├── pending-list.get.ts # 按场景拉取待审对象
 │   │   │   │   └── result.post.ts  # 写回审核结果
@@ -1470,7 +1470,7 @@ VoiceHub/
   - **`auth/`**: 认证相关API
   - **`songs/`**: 歌曲管理API
   - **`notifications/`**: 通知系统API
-  - **`open/`**: 公共API（无需认证）
+  - **`open/`**: 公共API（API Key 鉴权）
 - **`server/config/`**: 服务端配置（常量、环境配置等）
 - **`server/middleware/`**: 服务端中间件（认证、日志等）
 - **`server/plugins/`**: 服务端插件（错误处理等）

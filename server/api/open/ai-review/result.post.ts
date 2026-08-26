@@ -3,9 +3,25 @@ import { db, users, userStatusLogs, songs, songReplayRequests, and, eq } from '~
 import { getServerDate } from '~~/server/utils/serverTime'
 import { createApiError } from '~~/server/utils/apiError'
 import { SERVER_ERROR_CODES, SUBMISSION_NOTE_STATUS } from '~~/server/config/constants'
+import { SmtpService } from '~~/server/services/smtpService'
 
 const VALID_DECISIONS = ['APPROVE', 'REJECT', 'REVIEW']
 const VALID_SCENES = ['register', 'note', 'replay_note', 'song', 'language']
+
+// 审核通过邮件通知（异步，失败不影响主流程）
+async function notifyApproved(name: string | null, email: string) {
+  try {
+    const smtpService = SmtpService.getInstance()
+    if (await smtpService.ensureInitialized()) {
+      await smtpService.renderAndSend(email, 'register-approved', {
+        title: '注册审核已通过',
+        message: `${name ?? ''}，您的注册申请已通过审核，现在可以使用账号登录了。`
+      })
+    }
+  } catch (error) {
+    console.error('AI 审核通过邮件发送失败:', error)
+  }
+}
 
 // 外置 AI 审核网关：写回审核结果（API Key 鉴权 + ai-review:write）
 // register：APPROVE → 激活+快照 / REJECT → 删除+快照 / REVIEW → 不动
@@ -33,7 +49,7 @@ export default defineEventHandler(async (event) => {
 
     // 快照先行读取：用户被删除后仍可追溯（日志列可空，取不到快照时置空不报错）
     const target = await db
-      .select({ username: users.username, name: users.name })
+      .select({ username: users.username, name: users.name, email: users.email })
       .from(users)
       .where(eq(users.id, targetId))
       .limit(1)
@@ -61,6 +77,9 @@ export default defineEventHandler(async (event) => {
         }
         return updated.length
       })
+      if (applied > 0 && targetUser?.email) {
+        notifyApproved(targetUser.name, targetUser.email)
+      }
       return { success: true, applied }
     }
 

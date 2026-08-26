@@ -4095,7 +4095,9 @@ export const admin = {
       cardCodesRead: { label: 'Request Card Read', description: 'View request card list and statistics' },
       cardCodesWrite: { label: 'Request Card Management', description: 'Create and update request cards' },
       cardCodesDelete: { label: 'Request Card Delete', description: 'Delete request cards' },
-      backupExecute: { label: 'Auto Backup', description: 'Trigger automatic backup tasks' }
+      backupExecute: { label: 'Auto Backup', description: 'Trigger automatic backup tasks' },
+      aiReviewRead: { label: 'AI Review Read', description: 'Fetch AI review pending list' },
+      aiReviewWrite: { label: 'AI Review Write', description: 'Submit AI review results' }
     },
     loadFailed: 'Failed to load API keys',
     nameRequired: 'Enter key name',
