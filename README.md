@@ -1211,6 +1211,9 @@ VoiceHub/
 │   │   │   ├── settings.post.ts     # 更新通知设置
 │   │   │   └── settings.ts          # 获取通知设置
 │   │   ├── open/           # 开放API（无需认证）
+│   │   │   ├── ai-review/          # AI 审核开放API（外置网关对接，API Key 鉴权）
+│   │   │   │   ├── pending-list.get.ts # 按场景拉取待审对象
+│   │   │   │   └── result.post.ts  # 写回审核结果
 │   │   │   ├── card-codes/          # 点歌券开放API
 │   │   │   │   └── delete.post.ts   # 删除点歌券（兼容不支持 DELETE body 的代理）
 │   │   │   ├── card-codes.delete.ts # 删除点歌券

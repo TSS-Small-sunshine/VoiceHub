@@ -367,6 +367,10 @@ function getRequiredPermission(pathname: string, method: string): string | null 
     return 'backup:execute'
   }
 
+  if (normalizedPathname.startsWith('/api/open/ai-review')) {
+    return method === 'GET' ? 'ai-review:read' : 'ai-review:write'
+  }
+
   return null
 }
 
